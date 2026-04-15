@@ -4,6 +4,10 @@ import Difficulty from './Difficulty.vue';
 
 export default {
     name: 'Card',
+    props: {
+        id: Number
+    },
+    emits: ['select'],
     data() {
         return {
             
@@ -26,7 +30,7 @@ export default {
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" :data-flip-id="'card-' + id" @click="$emit('select', $event)">
         <div class="content">
             <div>Quiche Lorraine</div>
             <div class="duration"><IconDuration></IconDuration> 40"</div>
@@ -40,7 +44,7 @@ export default {
 
 .card {
     position: relative;
-    background-color: #FFFFFF;
+    background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04),
                 0 10px 20px rgba(124, 58, 237, 0.08);
     padding: 8px;

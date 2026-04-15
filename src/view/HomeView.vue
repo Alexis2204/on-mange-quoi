@@ -1,9 +1,56 @@
 <script>
 import Card from '@/component/Card.vue';
-export default {
+import CardView from './CardView.vue';
+import { gsap } from 'gsap'
+import { Flip } from 'gsap/Flip'
 
+gsap.registerPlugin(Flip)
+
+export default {
+    data() {
+        return {
+            selectedId: null
+        }
+    },
     components: {
-        Card
+        Card,
+        CardView
+    },
+        methods: {
+        async openCard(id, event) {
+            
+            this.selectedId = id
+            
+            await this.$nextTick()
+            
+            const state = Flip.getState(`[data-flip-id="card-${id}"]`)
+
+            Flip.from(state, {
+                duration: 0.4,
+                ease: 'power3.inOut',
+                absolute: true,
+                scale: true,
+            })
+
+            gsap.from('.card-view', {
+                opacity: 0,
+                duration: 0.4
+            })
+        },
+
+        async closeCard() {
+            const state = Flip.getState(`[data-flip-id="card-${this.selectedId}"]`)
+
+            this.selectedId = null
+
+            await this.$nextTick()
+
+            Flip.from(state, {
+                duration: 0.7,
+                ease: 'power3.inOut',
+                absolute: true
+            })
+        }
     }
 }
 </script>
@@ -11,11 +58,21 @@ export default {
 <template>
     <div class="home-view">
         <h1>On Mange <span class="quoi">Quoi ?</span></h1>
+
         <div class="cards">
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
+            <Card 
+              v-for="i in 3"
+              :key="i"
+              :id="i"
+              @select="(e) => openCard(i, e)"
+            />
         </div>
+
+        <CardView 
+            v-if="selectedId" 
+            :id="selectedId" 
+            @close="closeCard"
+        />
     </div>
 </template>
 

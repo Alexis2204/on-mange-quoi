@@ -1,12 +1,18 @@
 :root {
   --color-primary: #7C3AED;
+  --bg: #F8F5F2;
 }
 
 body {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     color: #1F2937;
-    background-color: #F8F5F2;
+    background-color: var(--bg);
+}
+
+h1 {
+    color: var(--color-primary);
+    font-weight: 400;
 }
 
 h1 {
