@@ -3,6 +3,10 @@ import Card from '@/component/Card.vue';
 import CardView from './CardView.vue';
 import { gsap } from 'gsap'
 import { Flip } from 'gsap/Flip'
+import IconExplorer from '@/icon/IconExplorer.vue';
+import Menu from '@/component/Menu.vue';
+
+import { initMenu, openMenuAnimation, closeMenuAnimation } from '@/library/animation';
 
 gsap.registerPlugin(Flip)
 
@@ -14,17 +18,16 @@ export default {
     },
     components: {
         Card,
-        CardView
+        CardView,
+        IconExplorer,
+        Menu
     },
-        methods: {
-        async openCard(id, event) {
-            
+    methods: {
+        async openCard(id) {
             this.selectedId = id
-            
             await this.$nextTick()
             
             const state = Flip.getState(`[data-flip-id="card-${id}"]`)
-
             Flip.from(state, {
                 duration: 0.4,
                 ease: 'power3.inOut',
@@ -50,8 +53,25 @@ export default {
                 ease: 'power3.inOut',
                 absolute: true
             })
+        },
+
+        openMenu() {
+            openMenuAnimation(
+                this.$refs.menu.$el, 
+                this.$refs.explorerBtn
+            );
+        },
+
+        closeMenu() {
+            closeMenuAnimation(
+                this.$refs.menu.$el,
+                this.$refs.explorerBtn
+            );
         }
-    }
+    },
+    mounted() {
+        initMenu(this.$refs.menu.$el);
+    },
 }
 </script>
 
@@ -61,18 +81,31 @@ export default {
 
         <div class="cards">
             <Card 
-              v-for="i in 3"
+              v-for="i in 10"
               :key="i"
               :id="i"
               @select="(e) => openCard(i, e)"
             />
         </div>
 
-        <CardView 
+        <CardView
             v-if="selectedId" 
             :id="selectedId" 
             @close="closeCard"
         />
+
+        <button 
+            ref="explorerBtn"
+            class="explorer"
+            @click="openMenu">
+            <IconExplorer></IconExplorer>
+            <span>Explorer</span>
+        </button>
+
+        <Menu
+            ref="menu"
+            @close="closeMenu">
+        </Menu>
     </div>
 </template>
 
@@ -89,5 +122,11 @@ export default {
     gap: 8px;
     width: calc(100vw - 16px);
     flex-wrap: wrap;
+}
+
+.explorer {
+    position: fixed;
+    bottom: 16px;
+    z-index: 9;
 }
 </style>
