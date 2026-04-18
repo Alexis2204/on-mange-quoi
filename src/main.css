@@ -10,6 +10,10 @@ body {
     background-color: var(--bg);
 }
 
+body.no-margin {
+  margin: 0;
+}
+
 h1 {
     color: var(--color-primary);
     font-weight: 400;
