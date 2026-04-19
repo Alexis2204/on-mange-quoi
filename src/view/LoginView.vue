@@ -13,7 +13,6 @@ export default {
 
         console.log("UID:", user.uid);
 
-        // 👉 redirection après login
         this.$router.push("/");
       } catch (error) {
         console.error("Erreur login:", error);
