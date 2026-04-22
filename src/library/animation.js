@@ -47,3 +47,34 @@ export function closeMenuAnimation(menuElement, buttonRef) {
 
     return timeline;
 }
+
+export async function logginAnimation() {
+    const timeline = gsap.timeline();
+    timeline.to(".home-title", {
+      opacity: 0,
+      duration: 0
+    }, 0)
+    
+    timeline.to(".google-button", {
+      opacity: 0,
+      duration: 0
+    }, 0)
+    timeline.to(".blob-top", {
+      y: "-120%",
+      duration: 1,
+      ease: "power2.in"
+    }, 0);
+
+    timeline.to(".blob-bottom", {
+      y: "120%",
+      duration: 1,
+      ease: "power2.in"
+    }, 0);
+
+    timeline.to(".background-layer", {
+      opacity: 0,
+      duration: 0.8
+    }, 0.2);
+
+    return timeline;
+}

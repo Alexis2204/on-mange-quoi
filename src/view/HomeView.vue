@@ -51,7 +51,8 @@ export default {
             Flip.from(state, {
                 duration: 0.7,
                 ease: 'power3.inOut',
-                absolute: true
+                absolute: true,
+                zIndex: 9
             })
         },
 
