@@ -2,6 +2,7 @@
 import { auth } from "../../firebaseApp";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { logginAnimation } from "@/library/animation";
+import { syncUserWithFirestore } from "@/library/bdd";
 
 import { gsap } from "gsap";
 import { Flip } from "gsap/Flip";
@@ -17,9 +18,10 @@ export default {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        console.log("UID:", user.uid);
+        console.log("Connexion réussis de :", user.uid);
 
         window.__PRELOAD_HOME__?.();
+        await syncUserWithFirestore(user);
         await this.$nextTick();
         await logginAnimation();
         this.$router.replace("/");
@@ -29,7 +31,6 @@ export default {
         console.error("Erreur login:", error);
       }
     }
-    
   },
   mounted() {
     document.body.classList.add("no-margin");

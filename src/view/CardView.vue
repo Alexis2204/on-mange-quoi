@@ -1,6 +1,12 @@
 <script>
 export default {
     name: 'CardView',
+    data() {
+        return {
+            edit: true,
+            meal: {}
+        }
+    },
     props: {
         id: Number
     },
@@ -12,8 +18,26 @@ export default {
     <div class="card-view" @click="$emit('close')">
         <div class="card" :data-flip-id="'card-' + id">
             <div class="content">
-                <h2>Quiche Lorraine</h2>
-                <p>Recette détaillée ici 👨‍🍳</p>
+                <div class="element">
+                    <h4>Nom</h4>
+                    <h2>Quiche Lorraine</h2>
+                </div>
+                <div class="element">
+                    <h4>Durée</h4>
+                    <input disabled/>
+                </div>
+                <div class="element">
+                    <h4>Effort / Difficulté</h4>
+                    <input disabled/>
+                </div>
+                <div class="element">
+                    <h4>Mangé pour la dernière fois</h4>
+                    <input disabled/>
+                </div>
+                <div class="element">
+                    <h4>Recette</h4>
+                    <input disabled/>
+                </div>
             </div>
         </div>
     </div>

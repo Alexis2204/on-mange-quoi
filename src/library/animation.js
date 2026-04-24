@@ -19,7 +19,7 @@ export function openMenuAnimation(menuElement, buttonRef) {
         ease: "power2.in"
     })
     .to(menuElement, {
-        y: 50,
+        y: 0,
         opacity: 1,
         duration: 0.5,
         ease: "back.out(1.2)" // 🔥 effet vivant

@@ -99,7 +99,7 @@ export default {
             ref="explorerBtn"
             class="explorer"
             @click="openMenu">
-            <IconExplorer></IconExplorer>
+            <IconExplorer :height="29"></IconExplorer>
             <span>Explorer</span>
         </button>
 
