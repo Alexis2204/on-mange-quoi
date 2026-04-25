@@ -5,7 +5,7 @@ import Difficulty from './Difficulty.vue';
 export default {
     name: 'Card',
     props: {
-        id: Number
+        meal: Object
     },
     emits: ['select'],
     data() {
@@ -30,11 +30,11 @@ export default {
 </script>
 
 <template>
-    <div class="card" :data-flip-id="'card-' + id" @click="$emit('select', $event)">
+    <div class="card" :data-flip-id="'card-' + meal?.id" @click="$emit('select', $event)">
         <div class="content">
-            <div>Quiche Lorraine</div>
-            <div class="duration"><IconDuration></IconDuration> 40"</div>
-            <div><Difficulty :difficulty="3"></Difficulty></div>
+            <div>{{meal.name}}</div>
+            <div class="duration"><IconDuration></IconDuration> {{meal.duration}}"</div>
+            <div><Difficulty :difficulty="meal.difficulty"></Difficulty></div>
         </div>
     </div>
 </template>

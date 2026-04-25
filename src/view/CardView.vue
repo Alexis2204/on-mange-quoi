@@ -1,42 +1,48 @@
 <script>
+import Difficulty from '@/component/Difficulty.vue';
+import IconDuration from '@/icon/IconDuration.vue';
+
 export default {
     name: 'CardView',
     data() {
         return {
             edit: true,
-            meal: {}
         }
     },
     props: {
-        id: Number
+        meal: Object
     },
-    emits: ['close']
+    emits: ['close'],
+    components: {
+        Difficulty,
+        IconDuration
+    }
 }
 </script>
 
 <template>
     <div class="card-view" @click="$emit('close')">
-        <div class="card" :data-flip-id="'card-' + id">
+        <div class="card" :data-flip-id="'card-' + meal.id">
             <div class="content">
                 <div class="element">
-                    <h4>Nom</h4>
-                    <h2>Quiche Lorraine</h2>
+                    <h2>{{ meal.name }}</h2>
                 </div>
                 <div class="element">
-                    <h4>Durée</h4>
-                    <input disabled/>
+                    <h5>Durée</h5>
+                    <div class="duration"><IconDuration></IconDuration> {{ meal.duration }}"</div>
                 </div>
                 <div class="element">
-                    <h4>Effort / Difficulté</h4>
-                    <input disabled/>
+                    <h5>Effort / Difficulté</h5>
+                    <Difficulty :difficulty="meal.difficulty"></Difficulty>
+                </div>
+                <div v-if="meal.lastEatenAt" class="element">
+                    <h5>Mangé pour la dernière fois</h5>
+                    <div>{{ meal.lastEatenAt }}</div>
                 </div>
                 <div class="element">
-                    <h4>Mangé pour la dernière fois</h4>
-                    <input disabled/>
-                </div>
-                <div class="element">
-                    <h4>Recette</h4>
-                    <input disabled/>
+                    <h5>Recette</h5>
+                    <div v-if="meal.recipe">{{ meal.recipe }}</div>
+                    <div class="info" v-else>Ajouter une recette</div>
                 </div>
             </div>
         </div>
@@ -87,5 +93,16 @@ export default {
     left: 8px;
     top: 64px;
     overflow-wrap: anywhere;
+    font-size: large;
+}
+
+.info {
+    color: var(--text-color-secondary);
+}
+
+.duration {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 </style>

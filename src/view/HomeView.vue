@@ -7,13 +7,16 @@ import IconExplorer from '@/icon/IconExplorer.vue';
 import Menu from '@/component/Menu.vue';
 
 import { initMenu, openMenuAnimation, closeMenuAnimation } from '@/library/animation';
+import { getUserMeals, addMealsBatchForUser } from '@/library/bdd';
+import { auth } from '../../firebaseApp';
 
 gsap.registerPlugin(Flip)
 
 export default {
     data() {
         return {
-            selectedId: null
+            selectedMeal: null,
+            meals: []
         }
     },
     components: {
@@ -23,11 +26,11 @@ export default {
         Menu
     },
     methods: {
-        async openCard(id) {
-            this.selectedId = id
+        async openCard(meal) {
+            this.selectedMeal = meal
             await this.$nextTick()
             
-            const state = Flip.getState(`[data-flip-id="card-${id}"]`)
+            const state = Flip.getState(`[data-flip-id="card-${meal.id}"]`)
             Flip.from(state, {
                 duration: 0.4,
                 ease: 'power3.inOut',
@@ -42,9 +45,9 @@ export default {
         },
 
         async closeCard() {
-            const state = Flip.getState(`[data-flip-id="card-${this.selectedId}"]`)
+            const state = Flip.getState(`[data-flip-id="card-${this.selectedMeal.id}"]`)
 
-            this.selectedId = null
+            this.selectedMeal = null
 
             await this.$nextTick()
 
@@ -70,6 +73,13 @@ export default {
             );
         }
     },
+    async created() {
+        try {
+          this.meals = await getUserMeals(auth.currentUser?.uid);
+        } catch(e) {
+            console.error(e);
+        }
+    },
     mounted() {
         initMenu(this.$refs.menu.$el);
     },
@@ -82,16 +92,18 @@ export default {
 
         <div class="cards">
             <Card 
-              v-for="i in 10"
-              :key="i"
-              :id="i"
-              @select="(e) => openCard(i, e)"
+              v-if="meals.length != 0"
+              v-for="meal in meals"
+              :key="meal.id"
+              :id="meal.id"
+              :meal="meal"
+              @select="(e) => openCard(meal, e)"
             />
         </div>
 
         <CardView
-            v-if="selectedId" 
-            :id="selectedId" 
+            v-if="selectedMeal" 
+            :meal="selectedMeal"
             @close="closeCard"
         />
 
