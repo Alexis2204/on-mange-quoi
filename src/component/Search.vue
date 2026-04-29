@@ -7,6 +7,11 @@ import SortBy from './SortBy.vue';
 
 
 export default {
+    data() {
+      return {
+        showAdvanced: false
+      }
+    },
     props: {
         modelValue: {
             type: Object,
@@ -28,6 +33,9 @@ export default {
           ...this.modelValue,
           [field]: value
         });
+      },
+      toggleAdvanced() {
+        this.showAdvanced = !this.showAdvanced;
       }
     }
 }
@@ -36,36 +44,39 @@ export default {
 <template>
     <div class="search">
         <SearchBar :query="modelValue.query" @update:query="update('query', $event)"></SearchBar>
-        <div class="info">
-            Recherche avancée 
+        <div class="info clickable" @click="toggleAdvanced">
+          Recherche avancée
+          <span class="arrow">{{ showAdvanced ? "▲" : "▼" }}</span>
         </div>
-        <div class="info">
-            Trié par
+        <div class="advanced" :class="{ open: showAdvanced }">
+          <div class="info">
+              Trié par
+          </div>
+          <SortBy 
+            :sortBy="modelValue.sortBy"
+            :orderBy="modelValue.orderBy"
+            @update:sortBy="update('sortBy', $event)"
+            @update:orderBy="update('orderBy', $event)"
+          />
+          <div class="info">
+              Durée
+          </div>
+          <DurationFilter
+            :durations="modelValue.durations"
+            @update:durations="update('durations', $event)"
+          />
+          <div class="info">
+              Difficulté
+          </div>
+          <DifficultyFilter 
+              :difficulties="modelValue.difficulties"
+              @update:difficulties="update('difficulties', $event)">
+          </DifficultyFilter>
+          <div class="info">
+              Tags
+          </div>
+          <ChipsFilter :tags="modelValue.tags" :all-tags="tags" @update:tags="update('tags', $event)"></ChipsFilter>
         </div>
-        <SortBy 
-          :sortBy="modelValue.sortBy"
-          :orderBy="modelValue.orderBy"
-          @update:sortBy="update('sortBy', $event)"
-          @update:orderBy="update('orderBy', $event)"
-        />
-        <div class="info">
-            Durée
-        </div>
-        <DurationFilter
-          :durations="modelValue.durations"
-          @update:durations="update('durations', $event)"
-        />
-        <div class="info">
-            Difficulté
-        </div>
-        <DifficultyFilter 
-            :difficulties="modelValue.difficulties"
-            @update:difficulties="update('difficulties', $event)">
-        </DifficultyFilter>
-        <div class="info">
-            Tags
-        </div>
-        <ChipsFilter :tags="modelValue.tags" :all-tags="tags" @update:tags="update('tags', $event)"></ChipsFilter>
     </div>
 </template>
 
@@ -76,4 +87,30 @@ export default {
     margin-bottom: 21px;
 }
 
+.clickable {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.arrow {
+  font-size: 12px;
+}
+
+/* 🔥 magie ici */
+.advanced {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.4s ease;
+}
+
+/* ouvert */
+.advanced.open {
+  max-height: 500px; /* assez grand */
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
