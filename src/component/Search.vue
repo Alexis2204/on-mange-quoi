@@ -1,6 +1,9 @@
 <script>
 import ChipsFilter from './ChipsFilter.vue';
+import DifficultyFilter from './DifficultyFilter.vue';
+import DurationFilter from './DurationFilter.vue';
 import SearchBar from './SearchBar.vue';
+import SortBy from './SortBy.vue';
 
 
 export default {
@@ -14,7 +17,10 @@ export default {
     emits: ['update:modelValue'],
     components: {
         SearchBar,
-        ChipsFilter
+        ChipsFilter,
+        DifficultyFilter,
+        DurationFilter,
+        SortBy
     },
     methods: {
       update(field, value) {
@@ -32,6 +38,32 @@ export default {
         <SearchBar :query="modelValue.query" @update:query="update('query', $event)"></SearchBar>
         <div class="info">
             Recherche avancée 
+        </div>
+        <div class="info">
+            Trié par
+        </div>
+        <SortBy 
+          :sortBy="modelValue.sortBy"
+          :orderBy="modelValue.orderBy"
+          @update:sortBy="update('sortBy', $event)"
+          @update:orderBy="update('orderBy', $event)"
+        />
+        <div class="info">
+            Durée
+        </div>
+        <DurationFilter
+          :durations="modelValue.durations"
+          @update:durations="update('durations', $event)"
+        />
+        <div class="info">
+            Difficulté
+        </div>
+        <DifficultyFilter 
+            :difficulties="modelValue.difficulties"
+            @update:difficulties="update('difficulties', $event)">
+        </DifficultyFilter>
+        <div class="info">
+            Tags
         </div>
         <ChipsFilter :tags="modelValue.tags" :all-tags="tags" @update:tags="update('tags', $event)"></ChipsFilter>
     </div>

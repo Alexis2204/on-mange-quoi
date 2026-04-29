@@ -47,5 +47,45 @@ export const isVisible = (meal, search) => {
     visible = visible && meal.tags.some(tag => search.tags.includes(tag));
   }
 
+  if (search.difficulties && search.difficulties.length != 0) {
+    visible = visible && search.difficulties.includes(meal.difficulty);
+  }
+
+  if (search.durations && search.durations.length != 0) {
+    visible = visible && matchDuration(meal.duration, search.durations);
+  }
+
   return visible;
+}
+
+const matchDuration = (mealDuration, durations) => {
+  return durations.some(range => {
+    if (range === "lt15") return mealDuration < 15;
+    if (range === "15-30") return mealDuration >= 15 && mealDuration <= 30;
+    if (range === "30-60") return mealDuration > 30 && mealDuration <= 60;
+    if (range === "gt60") return mealDuration > 60;
+  });
+}
+
+export const sortMeals = (meals, search) => {
+  return meals.sort((a, b) => {
+      let valA = a[search.sortBy];
+      let valB = b[search.sortBy];
+
+      // fallback pour lastEatenAt null
+      if (search.sortBy === "lastEatenAt") {
+        valA = valA?.seconds || 0;
+        valB = valB?.seconds || 0;
+      }
+
+      if (typeof valA === "string") {
+        return search.orderBy === "asc"
+          ? valA.localeCompare(valB)
+          : valB.localeCompare(valA);
+      }
+
+      return search.orderBy === "asc"
+        ? valA - valB
+        : valB - valA;
+    });
 }

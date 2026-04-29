@@ -10,7 +10,7 @@ import Search from '@/component/Search.vue';
 import { initMenu, openMenuAnimation, closeMenuAnimation } from '@/library/animation';
 import { getUserMeals, addMealsBatchForUser } from '@/library/bdd';
 import { auth } from '../../firebaseApp';
-import { isVisible } from '@/library/utils';
+import { isVisible, sortMeals } from '@/library/utils';
 
 gsap.registerPlugin(Flip)
 
@@ -21,7 +21,11 @@ export default {
             meals: [],
             search: {
               query: "",
-              tags: []
+              tags: [],
+              difficulties: [],
+              durations: [],
+              sortBy: "name",
+              orderBy: "asc"
             }
         }
     },
@@ -85,9 +89,11 @@ export default {
     },
     computed: {
       filteredMeals() {
-        return this.meals.filter(meal =>
+        let visibleMeals = this.meals.filter(meal =>
           isVisible(meal, this.search)
         );
+
+        return sortMeals(visibleMeals, this.search);
       },
       tags() {
         return [...new Set(

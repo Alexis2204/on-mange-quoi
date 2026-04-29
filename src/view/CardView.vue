@@ -76,7 +76,7 @@ export default {
                     <h5>Effort / Difficulté</h5>
                     <Difficulty :difficulty="meal.difficulty"></Difficulty>
                 </div>
-                <div v-if="meal.lastEatenAt" class="element">
+                <div class="element">
                     <h5>Mangé pour la dernière fois</h5>
                     <div>{{ formatDate(meal.lastEatenAt) }}</div>
                 </div>

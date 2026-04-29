@@ -33,7 +33,7 @@ export default {
 .chip {
     border: 1px solid var(--text-color);
     border-radius: 32px;
-    padding: 0 8px;
+    padding: 4px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
