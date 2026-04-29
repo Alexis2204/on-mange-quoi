@@ -44,7 +44,10 @@ export default {
             })
         },
 
-        async closeCard() {
+        async closeCard(refresh) {
+            if (refresh) {
+                this.meals = await getUserMeals(auth.currentUser?.uid);
+            }
             const state = Flip.getState(`[data-flip-id="card-${this.selectedMeal.id}"]`)
 
             this.selectedMeal = null
@@ -104,7 +107,7 @@ export default {
         <CardView
             v-if="selectedMeal" 
             :meal="selectedMeal"
-            @close="closeCard"
+            @close="(refresh) => closeCard(refresh)"
         />
 
         <button 

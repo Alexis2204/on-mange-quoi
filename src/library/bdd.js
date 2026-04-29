@@ -12,6 +12,7 @@ import {
   writeBatch
  } from "firebase/firestore";
 import { db } from "../../firebaseApp";
+import { mapLocalMealToMeal, mapLocalMealToUserMeal } from "./utils";
 
 export const syncUserWithFirestore = async (user) => {
   try {
@@ -51,7 +52,7 @@ export const addMealForUser = async (userId, meal) => {
 
       createdBy: userId,
       createdAt: serverTimestamp(),
-      usageCount: 0,
+      // usageCount: 0,
     });
 
     // 2️⃣ Ajouter dans la liste perso (référence)
@@ -84,18 +85,20 @@ export const getUserMeals = async (userId) => {
       collection(db, "users", userId, "meals")
     );
 
-    const mealIds = snapshot.docs.map(doc => doc.data().mealId);
+    const userMeals = snapshot.docs.map(doc => doc.data());
 
-    if (mealIds.length === 0) return [];
+    if (userMeals.length === 0) return [];
 
     // 2️⃣ fetch parallèle 🔥
     const meals = await Promise.all(
-      mealIds.map(async (id) => {
-        const snap = await getDoc(doc(db, "meals", id));
+      userMeals.map(async (userMeal) => {
+        const snap = await getDoc(doc(db, "meals", userMeal.mealId));
         if (!snap.exists()) return null;
 
         return {
           id: snap.id,
+          lastEatenAt: userMeal.lastEatenAt,
+          note: userMeal.note,
           ...snap.data()
         };
       })
@@ -138,7 +141,7 @@ export const addMealsBatchForUser = async (userId, jsonPath) => {
 
         createdBy: userId,
         createdAt: serverTimestamp(),
-        usageCount: 0,
+        // usageCount: 0,
       });
 
       // 🔗 ajouter dans user/meals
@@ -167,3 +170,49 @@ export const addMealsBatchForUser = async (userId, jsonPath) => {
     throw error;
   }
 };
+
+export const updateLastEatenAt = async (userId, mealId) => {
+  try {
+    if (!userId || !mealId) {
+      throw new Error("userId ou mealId manquant");
+    }
+
+    const userMealRef = doc(
+      db,
+      "users",
+      userId,
+      "meals",
+      mealId
+    );
+
+    await updateDoc(userMealRef, {
+      lastEatenAt: serverTimestamp()
+    });
+
+  } catch (error) {
+    console.error("Erreur update lastEatenAt:", error);
+    throw error;
+  }
+};
+
+export const updateMeal = async (userId, localMeal) => {
+  try {
+    let userMeal = mapLocalMealToUserMeal(localMeal);
+    let meal = mapLocalMealToMeal(localMeal);
+  
+    const mealRef = doc(db, "meals", localMeal.id);
+    await updateDoc(mealRef, meal);
+
+    const userMealRef = doc(
+      db,
+      "users",
+      userId,
+      "meals",
+      localMeal.id
+    );
+    await updateDoc(userMealRef, userMeal);
+
+  } catch (error) {
+    console.error("Erreur update", error);
+  }
+}
