@@ -16,15 +16,6 @@ export default {
     components: {
         IconDuration,
         Difficulty
-    },
-    computed: {
-        
-    },
-    methods: {
-        
-    },
-    mounted() {
-        
     }
 }
 </script>

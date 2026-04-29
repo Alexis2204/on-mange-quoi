@@ -49,3 +49,7 @@ button {
     align-items: center;
     gap: 8px;
 }
+
+.info {
+    color: var(--text-color-secondary);
+}

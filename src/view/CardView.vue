@@ -185,10 +185,6 @@ export default {
     font-size: large;
 }
 
-.info {
-    color: var(--text-color-secondary);
-}
-
 .duration {
     display: flex;
     align-items: center;

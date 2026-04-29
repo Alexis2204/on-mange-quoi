@@ -9,6 +9,10 @@ export default {
         delete: {
             type: Boolean,
             default: false
+        },
+        selected: {
+            type: Boolean,
+            default: false
         }
     },
     emits: ['delete'],
@@ -19,7 +23,7 @@ export default {
 </script>
 
 <template>
-    <div class="chip">
+    <div class="chip" :class="{ selected: selected }">
         {{ name }}
         <IconDelete v-if="delete" @click="$emit('delete')"></IconDelete>
     </div>
@@ -29,13 +33,18 @@ export default {
 .chip {
     border: 1px solid var(--text-color);
     border-radius: 32px;
-    color: var(--text-color);
     padding: 0 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: fit-content;
     gap: 4px;
-
 }
+
+.selected {
+    background-color: var(--text-color);
+    color: white;
+}
+
+
 </style>

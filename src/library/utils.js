@@ -21,7 +21,7 @@ export const formatLastEatenAt = (timestamp) => {
 
 export const mapLocalMealToUserMeal = (localMeal) => {
     return {
-        note: localMeal.note
+        note: localMeal.note || ""
     }
 }
 
@@ -33,4 +33,19 @@ export const mapLocalMealToMeal = (localMeal) => {
         recipe: localMeal.recipe || "",
         tags: localMeal.tags || [],
     }
+}
+
+export const isVisible = (meal, search) => {
+  let visible = true;
+
+  if (search.query) {
+    const queryLower = search.query.toLowerCase();
+    visible = meal.name.toLowerCase().includes(queryLower);
+  }
+
+  if (search.tags && search.tags.length != 0) {
+    visible = visible && meal.tags.some(tag => search.tags.includes(tag));
+  }
+
+  return visible;
 }

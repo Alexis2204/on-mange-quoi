@@ -5,10 +5,12 @@ import { gsap } from 'gsap'
 import { Flip } from 'gsap/Flip'
 import IconExplorer from '@/icon/IconExplorer.vue';
 import Menu from '@/component/Menu.vue';
+import Search from '@/component/Search.vue';
 
 import { initMenu, openMenuAnimation, closeMenuAnimation } from '@/library/animation';
 import { getUserMeals, addMealsBatchForUser } from '@/library/bdd';
 import { auth } from '../../firebaseApp';
+import { isVisible } from '@/library/utils';
 
 gsap.registerPlugin(Flip)
 
@@ -16,20 +18,25 @@ export default {
     data() {
         return {
             selectedMeal: null,
-            meals: []
+            meals: [],
+            search: {
+              query: "",
+              tags: []
+            }
         }
     },
     components: {
         Card,
         CardView,
         IconExplorer,
-        Menu
+        Menu,
+        Search
     },
     methods: {
         async openCard(meal) {
             this.selectedMeal = meal
             await this.$nextTick()
-            
+
             const state = Flip.getState(`[data-flip-id="card-${meal.id}"]`)
             Flip.from(state, {
                 duration: 0.4,
@@ -64,7 +71,7 @@ export default {
 
         openMenu() {
             openMenuAnimation(
-                this.$refs.menu.$el, 
+                this.$refs.menu.$el,
                 this.$refs.explorerBtn
             );
         },
@@ -76,10 +83,22 @@ export default {
             );
         }
     },
+    computed: {
+      filteredMeals() {
+        return this.meals.filter(meal =>
+          isVisible(meal, this.search)
+        );
+      },
+      tags() {
+        return [...new Set(
+              this.meals.flatMap(meal => meal.tags ?? [])
+            )];
+      }
+    },
     async created() {
         try {
-          this.meals = await getUserMeals(auth.currentUser?.uid);
-        } catch(e) {
+            this.meals = await getUserMeals(auth.currentUser?.uid);
+        } catch (e) {
             console.error(e);
         }
     },
@@ -93,34 +112,21 @@ export default {
     <div class="home-view">
         <h1>On Mange <span class="quoi">Quoi ?</span></h1>
 
+        <Search v-model="search" :tags="tags"></Search>
+
         <div class="cards">
-            <Card 
-              v-if="meals.length != 0"
-              v-for="meal in meals"
-              :key="meal.id"
-              :id="meal.id"
-              :meal="meal"
-              @select="(e) => openCard(meal, e)"
-            />
+            <Card v-if="filteredMeals.length != 0" v-for="meal in filteredMeals" :key="meal.id" :id="meal.id" :meal="meal"
+                @select="(e) => openCard(meal, e)" />
         </div>
 
-        <CardView
-            v-if="selectedMeal" 
-            :meal="selectedMeal"
-            @close="(refresh) => closeCard(refresh)"
-        />
+        <CardView v-if="selectedMeal" :meal="selectedMeal" @close="(refresh) => closeCard(refresh)" />
 
-        <button 
-            ref="explorerBtn"
-            class="explorer"
-            @click="openMenu">
+        <button ref="explorerBtn" class="explorer" @click="openMenu">
             <IconExplorer :height="29"></IconExplorer>
             <span>Explorer</span>
         </button>
 
-        <Menu
-            ref="menu"
-            @close="closeMenu">
+        <Menu ref="menu" @close="closeMenu">
         </Menu>
     </div>
 </template>
