@@ -12,6 +12,44 @@ export default defineConfig({
     vueDevTools(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        runtimeCaching: [
+          {
+            // 🔥 API Firebase / Firestore
+            urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'firestore-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 // 1 jour
+              }
+            }
+          },
+          {
+            // 🖼️ Images
+            urlPattern: ({ request }) => request.destination === 'image',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30
+              }
+            }
+          },
+          {
+            // 📦 JS / CSS
+            urlPattern: ({ request }) =>
+              request.destination === 'script' ||
+              request.destination === 'style',
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'assets-cache'
+            }
+          }
+        ]
+      },
       manifest: {
         name: 'On Mange Quoi',
         short_name: 'OMQ',
