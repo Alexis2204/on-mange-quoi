@@ -12,7 +12,12 @@ import {
   writeBatch
  } from "firebase/firestore";
 import { db } from "../../firebaseApp";
-import { mapLocalMealToMeal, mapLocalMealToUserMeal } from "./utils";
+import { 
+  mapLocalMealToMeal, 
+  mapLocalMealToUserMeal, 
+  getGlobaleMealFromNewMeal, 
+  getUserMealFromNewMeal 
+} from "./utils";
 
 export const syncUserWithFirestore = async (user) => {
   try {
@@ -30,51 +35,9 @@ export const syncUserWithFirestore = async (user) => {
         lastConnexion: serverTimestamp(),
       });
     }
-
+    
   } catch (error) {
     console.error("Erreur sync user:", error);
-  }
-};
-
-export const addMealForUser = async (userId, meal) => {
-  try {
-    if (!userId) {
-      console.error("pas de userId");
-
-    }
-    // 1️⃣ Ajouter dans la collection globale
-    const mealRef = await addDoc(collection(db, "meals"), {
-      name: meal.name,
-      tags: meal.tags || [],
-      duration: meal.duration,
-      difficulty: meal.difficulty || 1,
-      recipe: meal.recipe || "",
-
-      createdBy: userId,
-      createdAt: serverTimestamp(),
-      // usageCount: 0,
-    });
-
-    // 2️⃣ Ajouter dans la liste perso (référence)
-    const userMealRef = doc(
-      db,
-      "users",
-      userId,
-      "meals",
-      mealRef.id
-    );
-
-    await setDoc(userMealRef, {
-      mealId: mealRef.id,
-      addedAt: serverTimestamp(),
-      lastEatenAt: null,
-    });
-
-    return mealRef.id;
-
-  } catch (error) {
-    console.error("Erreur ajout meal:", error);
-    throw error;
   }
 };
 
@@ -99,6 +62,7 @@ export const getUserMeals = async (userId) => {
           id: snap.id,
           lastEatenAt: userMeal.lastEatenAt,
           note: userMeal.note,
+          recipe: userMeal.recipe,
           ...snap.data()
         };
       })
@@ -117,32 +81,55 @@ export const getUserMeals = async (userId) => {
   }
 };
 
-export const addMealsBatchForUser = async (userId, jsonPath) => {
-  const response = await fetch(jsonPath);
-  const meals = await response.json();
+export const addMealForUser = async (userId, meal) => {
+  try {
+    if (!userId) {
+      console.error("pas de userId");
+    }
 
+    let timestamp = serverTimestamp();
+    // 1️⃣ Ajouter dans la collection globale
+    const mealRef = await addDoc(
+      collection(db, "meals"), 
+      getGlobaleMealFromNewMeal(meal, userId, timestamp));
+
+    // 2️⃣ Ajouter dans la liste perso (référence)
+    const userMealRef = doc(
+      db,
+      "users",
+      userId,
+      "meals",
+      mealRef.id
+    );
+
+    await setDoc(userMealRef, getUserMealFromNewMeal(mealRef.id, meal, timestamp));
+
+    return mealRef.id;
+
+  } catch (error) {
+    console.error("Erreur ajout meal:", error);
+    throw error;
+  }
+};
+
+export const importMeals = async (userId, file) => {
   try {
     if (!userId) {
       throw new Error("Pas de userId");
     }
 
+    const text = await file.text();
+    const meals = JSON.parse(text);
+
     const batch = writeBatch(db);
+    let timestamp = serverTimestamp();
 
     for (const meal of meals) {
       // 🔥 créer une ref AVANT (pas addDoc)
       const mealRef = doc(collection(db, "meals"));
 
-      batch.set(mealRef, {
-        name: meal.name,
-        tags: meal.tags || [],
-        duration: meal.duration,
-        difficulty: meal.difficulty || 1,
-        recipe: meal.recipe || "",
-
-        createdBy: userId,
-        createdAt: serverTimestamp(),
-        // usageCount: 0,
-      });
+      
+      batch.set(mealRef, getGlobaleMealFromNewMeal(meal, userId, timestamp));
 
       // 🔗 ajouter dans user/meals
       const userMealRef = doc(
@@ -153,11 +140,7 @@ export const addMealsBatchForUser = async (userId, jsonPath) => {
         mealRef.id
       );
 
-      batch.set(userMealRef, {
-        mealId: mealRef.id,
-        addedAt: serverTimestamp(),
-        lastEatenAt: null,
-      });
+      batch.set(userMealRef, getUserMealFromNewMeal(mealRef.id, meal, timestamp));
     }
 
     // 🚀 1 seule requête
@@ -168,6 +151,49 @@ export const addMealsBatchForUser = async (userId, jsonPath) => {
   } catch (error) {
     console.error("Erreur batch:", error);
     throw error;
+  }
+};
+
+export const exportMeals = (meals) => {
+  try {
+    if (!meals || meals.length === 0) {
+      console.warn("Aucun meal à exporter");
+      return;
+    }
+
+    // 1️⃣ nettoyer les données (on garde seulement ce que tu veux)
+    const cleanMeals = meals.map(meal => ({
+      name: meal.name || "",
+      note: meal.note || "",
+      recipe: meal.recipe || "",
+      difficulty: meal.difficulty || 1,
+      duration: meal.duration || 0,
+      tags: meal.tags || []
+    }));
+
+    // 2️⃣ convertir en JSON
+    const json = JSON.stringify(cleanMeals, null, 2);
+
+    // 3️⃣ créer un blob
+    const blob = new Blob([json], { type: "application/json" });
+
+    // 4️⃣ créer URL temporaire
+    const url = URL.createObjectURL(blob);
+
+    // 5️⃣ créer un lien invisible
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `on-mange-quoi-export-${Date.now()}.json`;
+
+    document.body.appendChild(a);
+    a.click();
+
+    // 6️⃣ cleanup
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+  } catch (error) {
+    console.error("Erreur export:", error);
   }
 };
 

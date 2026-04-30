@@ -21,7 +21,8 @@ export const formatLastEatenAt = (timestamp) => {
 
 export const mapLocalMealToUserMeal = (localMeal) => {
     return {
-        note: localMeal.note || ""
+        note: localMeal.note || "",
+        recipe: localMeal.recipe || ""
     }
 }
 
@@ -30,7 +31,6 @@ export const mapLocalMealToMeal = (localMeal) => {
         name: localMeal.name,
         duration: localMeal.duration,
         difficulty: localMeal.difficulty,
-        recipe: localMeal.recipe || "",
         tags: localMeal.tags || [],
     }
 }
@@ -88,4 +88,27 @@ export const sortMeals = (meals, search) => {
         ? valA - valB
         : valB - valA;
     });
+}
+
+export const getGlobaleMealFromNewMeal = (newMeal, userId, timestamp) => {
+  return {
+    name: newMeal.name,
+    tags: newMeal.tags || [],
+    duration: newMeal.duration,
+    difficulty: newMeal.difficulty || 1,
+    createdBy: userId,
+    createdAt: timestamp,
+    usageCount: 0,
+  }
+}
+
+
+export const getUserMealFromNewMeal = (mealId, newMeal, timestamp) => {
+  return {
+    mealId: mealId,
+    addedAt: timestamp,
+    lastEatenAt: null,
+    note: newMeal.note || "",
+    recipe: newMeal.recipe || "",
+  }
 }

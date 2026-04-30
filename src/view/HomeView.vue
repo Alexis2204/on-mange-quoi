@@ -8,7 +8,7 @@ import Menu from '@/component/Menu.vue';
 import Search from '@/component/Search.vue';
 
 import { initMenu, openMenuAnimation, closeMenuAnimation } from '@/library/animation';
-import { getUserMeals, addMealsBatchForUser } from '@/library/bdd';
+import { getUserMeals } from '@/library/bdd';
 import { auth } from '../../firebaseApp';
 import { isVisible, sortMeals } from '@/library/utils';
 
@@ -80,7 +80,10 @@ export default {
             );
         },
 
-        closeMenu() {
+        async closeMenu(refresh) {
+            if (refresh) {
+                this.meals = await getUserMeals(auth.currentUser?.uid);
+            }
             closeMenuAnimation(
                 this.$refs.menu.$el,
                 this.$refs.explorerBtn
@@ -132,7 +135,7 @@ export default {
             <span>Explorer</span>
         </button>
 
-        <Menu ref="menu" @close="closeMenu">
+        <Menu ref="menu" :meals="meals" @close="closeMenu">
         </Menu>
     </div>
 </template>

@@ -7,7 +7,9 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebaseApp";
 import IconPlus from '@/icon/IconPlus.vue';
 import NewMeal from './NewMeal.vue';
-import { addMealForUser } from '@/library/bdd';
+import { addMealForUser, exportMeals, importMeals } from '@/library/bdd';
+import IconExport from '@/icon/IconExport.vue';
+import IconImport from '@/icon/IconImport.vue';
 
 
 export default {
@@ -16,11 +18,19 @@ export default {
             showMenu: true
         }
     },
+    props: {
+        meals: {
+            type: Array,
+            default: () => []
+        }
+    },
     components: {
         IconExplorer,
         IconClose,
         IconLogout,
         IconPlus,
+        IconExport,
+        IconImport,
         MenuItem,
         NewMeal
     },
@@ -47,6 +57,27 @@ export default {
         } catch(e) {
             console.error(e);
         }
+      },
+      async exportMeals() {
+        await exportMeals(this.meals);
+      },
+      importMeals() {
+        this.$refs.fileInput.click();
+      },
+      async handleFileImport(event) {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        try {
+          await importMeals(auth.currentUser?.uid, file);
+          this.$emit('close', true); // refresh
+        } catch (e) {
+          console.error(e);
+        }
+      
+        // reset input (important pour pouvoir re-importer le même fichier)
+        event.target.value = "";
       }
     }
 }
@@ -64,6 +95,12 @@ export default {
             <MenuItem @click="logout">
                 <IconLogout></IconLogout>
             </MenuItem>
+            <MenuItem @click="exportMeals">
+              <IconExport></IconExport>
+            </MenuItem>
+            <MenuItem @click="importMeals">
+              <IconImport></IconImport>
+            </MenuItem>
             <MenuItem @click="startNewMealCreation">
                 <IconPlus></IconPlus>
             </MenuItem>
@@ -73,6 +110,13 @@ export default {
             @cancel="stopNewMealCreation" 
             @submit="createNewMeal">
         </NewMeal>
+        <input 
+          type="file" 
+          ref="fileInput" 
+          accept="application/json"
+          style="display: none"
+          @change="handleFileImport"
+        />
         <div class="footer"></div>
     </div>
 </template>
