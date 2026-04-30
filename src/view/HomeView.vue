@@ -10,7 +10,7 @@ import Search from '@/component/Search.vue';
 import { initMenu, openMenuAnimation, closeMenuAnimation } from '@/library/animation';
 import { getUserMeals } from '@/library/bdd';
 import { auth } from '../../firebaseApp';
-import { isVisible, sortMeals } from '@/library/utils';
+import { isVisible, sortMeals, pickRandomMealWeighted } from '@/library/utils';
 
 gsap.registerPlugin(Flip)
 
@@ -88,6 +88,10 @@ export default {
                 this.$refs.menu.$el,
                 this.$refs.explorerBtn
             );
+        },
+
+        selectMeal() {
+            this.openCard(pickRandomMealWeighted(this.meals));
         }
     },
     computed: {
@@ -128,6 +132,8 @@ export default {
                 @select="(e) => openCard(meal, e)" />
         </div>
 
+        <div class="footer"></div>
+
         <CardView v-if="selectedMeal" :meal="selectedMeal" @close="(refresh) => closeCard(refresh)" />
 
         <button ref="explorerBtn" class="explorer" @click="openMenu">
@@ -135,7 +141,7 @@ export default {
             <span>Explorer</span>
         </button>
 
-        <Menu ref="menu" :meals="meals" @close="closeMenu">
+        <Menu ref="menu" :meals="meals" @close="closeMenu" @roll="selectMeal">
         </Menu>
     </div>
 </template>
@@ -159,5 +165,9 @@ export default {
     position: fixed;
     bottom: 16px;
     z-index: 9;
+}
+
+.footer {
+    height: 150px;
 }
 </style>

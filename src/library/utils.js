@@ -112,3 +112,43 @@ export const getUserMealFromNewMeal = (mealId, newMeal, timestamp) => {
     recipe: newMeal.recipe || "",
   }
 }
+
+export const pickRandomMealWeighted = (meals) => {
+  if (!meals || meals.length === 0) return null;
+
+  const now = Date.now();
+
+  // 1️⃣ calcul des poids
+  const weightedMeals = meals.map(meal => {
+    let weight;
+
+    if (!meal.lastEatenAt) {
+      weight = 100; // 🔥 jamais mangé = ultra prioritaire
+    } else {
+      const last = meal.lastEatenAt.toDate
+        ? meal.lastEatenAt.toDate().getTime()
+        : new Date(meal.lastEatenAt).getTime();
+
+      const daysSince = (now - last) / (1000 * 60 * 60 * 24);
+
+      weight = Math.max(daysSince, 50); // minimum 1
+    }
+
+    return { meal, weight };
+  });
+
+  // 2️⃣ somme totale
+  const totalWeight = weightedMeals.reduce((sum, m) => sum + m.weight, 0);
+
+  // 3️⃣ tirage aléatoire
+  let random = Math.random() * totalWeight;
+
+  for (const item of weightedMeals) {
+    if (random < item.weight) {
+      return item.meal;
+    }
+    random -= item.weight;
+  }
+
+  return meals[0]; // fallback
+};

@@ -10,6 +10,7 @@ import NewMeal from './NewMeal.vue';
 import { addMealForUser, exportMeals, importMeals } from '@/library/bdd';
 import IconExport from '@/icon/IconExport.vue';
 import IconImport from '@/icon/IconImport.vue';
+import IconRandom from '@/icon/IconRandom.vue';
 
 
 export default {
@@ -24,6 +25,7 @@ export default {
             default: () => []
         }
     },
+    emits: ['close', 'select', 'roll'],
     components: {
         IconExplorer,
         IconClose,
@@ -31,6 +33,7 @@ export default {
         IconPlus,
         IconExport,
         IconImport,
+        IconRandom,
         MenuItem,
         NewMeal
     },
@@ -78,7 +81,7 @@ export default {
       
         // reset input (important pour pouvoir re-importer le même fichier)
         event.target.value = "";
-      }
+      },
     }
 }
 
@@ -103,6 +106,9 @@ export default {
             </MenuItem>
             <MenuItem @click="startNewMealCreation">
                 <IconPlus></IconPlus>
+            </MenuItem>
+            <MenuItem>
+              <IconRandom @roll="$emit('roll')" ></IconRandom>
             </MenuItem>
         </div>
         <NewMeal 
@@ -148,7 +154,7 @@ export default {
 .content {
     padding: 16px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-evenly;
     gap: 8px;
 }
 
