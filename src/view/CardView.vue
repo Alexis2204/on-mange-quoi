@@ -19,7 +19,11 @@ export default {
         }
     },
     props: {
-        meal: Object
+        meal: Object,
+        allTags: {
+            type: Array,
+            default: () => []
+        }
     },
     emits: ['close'],
     components: {
@@ -122,7 +126,7 @@ export default {
                 <div class="element">
                     <h5>Tags</h5>
                     <div class="chips">
-                        <ChipsEdit v-model="meal.tags"></ChipsEdit>
+                        <ChipsEdit v-model="meal.tags" :all-tags="allTags"></ChipsEdit>
                     </div>
                 </div>
                 <div class="element">

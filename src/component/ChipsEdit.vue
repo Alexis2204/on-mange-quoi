@@ -3,13 +3,12 @@ import Chip from './Chip.vue';
 
 
 export default {
-    data() {
-        return {
-            newTag: ""
-        }
-    },
     props: {
         modelValue: {
+            type: Array,
+            default: () => []
+        },
+        allTags: {
             type: Array,
             default: () => []
         }
@@ -19,35 +18,25 @@ export default {
         Chip
     },
     methods: {
-        addTag() {
-            if (this.newTag != "") {
-                let newTags = [...this.modelValue];
-                newTags.push(this.newTag);
-                this.newTag = "";
-                this.$emit('update:modelValue', newTags);
-            }
-        },
-        deleteTag(tag) {
+        toggleTag(tag) {
             let newTags = [...this.modelValue];
-            newTags = newTags.filter(t => t !== tag);
+            if (this.modelValue.includes(tag)) {
+                newTags = newTags.filter(t => t !== tag);
+            } else {
+                newTags.push(tag);
+            }
             this.$emit('update:modelValue', newTags);
+        },
+        getState(tag) {
+            return this.modelValue.includes(tag) ? "include" : "neutral";
         }
     }
 }
-
 </script>
 
 <template>
     <div class="chips-edit">
-        <Chip v-for="tag in modelValue" :name="tag" :key="tag" :delete="true" @delete="deleteTag(tag)"></Chip>
-        <form @submit.prevent="addTag">
-          <input 
-            v-model="newTag"
-            type="text"
-            placeholder="Ajouter un tag..."
-            enterkeyhint="done"
-          />
-        </form>
+        <Chip v-for="tag in allTags" :name="tag" :key="tag" :state="getState(tag)" @click="toggleTag(tag)"></Chip>
     </div>
 </template>
 

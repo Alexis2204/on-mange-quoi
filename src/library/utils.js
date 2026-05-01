@@ -43,8 +43,15 @@ export const isVisible = (meal, search) => {
     visible = meal.name.toLowerCase().includes(queryLower);
   }
 
-  if (search.tags && search.tags.length != 0) {
-    visible = visible && meal.tags.some(tag => search.tags.includes(tag));
+  if (search.includeTags && search.includeTags.length != 0) {
+    visible = visible && meal.tags.some(tag => search.includeTags.includes(tag));
+  }
+
+  if (search.excludeTags && search.excludeTags.length !== 0) {
+    const hasExclude = meal.tags.some(tag =>
+      search.excludeTags.includes(tag)
+    );
+    visible = visible && !hasExclude;
   }
 
   if (search.difficulties && search.difficulties.length != 0) {
@@ -101,7 +108,6 @@ export const getGlobaleMealFromNewMeal = (newMeal, userId, timestamp) => {
     usageCount: 0,
   }
 }
-
 
 export const getUserMealFromNewMeal = (mealId, newMeal, timestamp) => {
   return {

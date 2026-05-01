@@ -1,0 +1,197 @@
+[
+  { "name": "Barbecue", "note": "", "recipe": "", "difficulty": 1, "duration": 30, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Blanquette de veau", "note": "", "recipe": "", "difficulty": 3, "duration": 90, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Borek", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Plat","Féculent","Chaud", "Commande"] },
+
+  { "name": "Boudin blanc", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Boudin noir", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Boulettes de viande", "note": "", "recipe": "", "difficulty": 2, "duration": 35, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Brochettes", "note": "", "recipe": "", "difficulty": 1, "duration": 25, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Cake salé", "note": "", "recipe": "", "difficulty": 2, "duration": 40, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Canard confit", "note": "", "recipe": "", "difficulty": 3, "duration": 60, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Cannelloni", "note": "", "recipe": "", "difficulty": 3, "duration": 40, "tags": ["Plat","Féculent","Chaud","Complet"] },
+
+  { "name": "Chaussons aux pommes", "note": "", "recipe": "", "difficulty": 2, "duration": 35, "tags": ["Dessert","Féculent","Chaud"] },
+
+  { "name": "Chinois asiatique", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Féculent","Chaud","Complet", "Commande"] },
+
+  { "name": "Choucroute", "note": "", "recipe": "", "difficulty": 3, "duration": 90, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Coquilles Saint-Jacques", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Plat","Poisson","Chaud"] },
+
+  { "name": "Cordon bleu", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Côtes de porc marinées", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Croque monsieur", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Sandwich","Féculent","Chaud","Complet"] },
+
+  { "name": "Crozet", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Crumble", "note": "", "recipe": "", "difficulty": 1, "duration": 30, "tags": ["Dessert","Féculent","Chaud"] },
+
+  { "name": "Empanadas", "note": "", "recipe": "", "difficulty": 2, "duration": 35, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Épinards", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Légumes","Chaud","Accompagnement"] },
+
+  { "name": "Escalope panée", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Fougasse", "note": "", "recipe": "", "difficulty": 3, "duration": 45, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Galette", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Féculent","Chaud","Complet"] },
+
+  { "name": "Gaufres salées", "note": "", "recipe": "", "difficulty": 2, "duration": 20, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Hachis parmentier", "note": "", "recipe": "", "difficulty": 3, "duration": 45, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Hamburger Maison", "note": "", "recipe": "", "difficulty": 2, "duration": 20, "tags": ["Sandwich","Viande","Chaud","Complet"] },
+  { "name": "Hamburger surgelé", "note": "", "recipe": "", "difficulty": 2, "duration": 15, "tags": ["Sandwich","Viande","Chaud","Complet", "Industriel"] },
+  { "name": "Hamburger", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Sandwich","Viande","Chaud","Complet", "Commande"] },
+
+  { "name": "Hot dog Maison", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Sandwich","Viande","Chaud","Complet"] },
+  { "name": "Hot dog surgelé", "note": "", "recipe": "", "difficulty": 1, "duration": 8, "tags": ["Sandwich","Viande","Chaud","Complet", "Industriel"] },
+  { "name": "Hot dog", "note": "", "recipe": "", "difficulty": 1, "duration": 12, "tags": ["Sandwich","Viande","Chaud","Complet", "Commande"] },
+
+  { "name": "Lasagne Maison", "note": "", "recipe": "", "difficulty": 3, "duration": 50, "tags": ["Plat","Viande","Chaud","Complet"] },
+  { "name": "Lasagne surgelée", "note": "", "recipe": "", "difficulty": 3, "duration": 35, "tags": ["Plat","Viande","Chaud","Complet", "Industriel"] },
+  { "name": "Lasagne", "note": "", "recipe": "", "difficulty": 3, "duration": 60, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Merguez et chipolata", "note": "", "recipe": "", "difficulty": 1, "duration": 25, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Milanaise", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Moelleux chocolat", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Dessert","Féculent","Chaud"] },
+
+  { "name": "Moussaka", "note": "", "recipe": "", "difficulty": 3, "duration": 60, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Nouilles crevettes", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Plat","Poisson","Chaud","Complet"] },
+
+  { "name": "Nuggets et pâtes", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Pizza Maison", "note": "", "recipe": "", "difficulty": 2, "duration": 35, "tags": ["Plat","Féculent","Chaud","Complet"] },
+  { "name": "Pizza surgelée", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Féculent","Chaud","Complet", "Industriel"] },
+  { "name": "Pizza", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Plat","Féculent","Chaud","Complet", "Commande"] },
+
+  { "name": "Poisson pané", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Poisson","Chaud"] },
+
+  { "name": "Pommes dauphines", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Plat","Féculent","Chaud","Accompagnement"] },
+
+  { "name": "Poulet rôti", "note": "", "recipe": "", "difficulty": 2, "duration": 60, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Purée", "note": "", "recipe": "", "difficulty": 1, "duration": 25, "tags": ["Plat","Féculent","Chaud","Accompagnement"] },
+
+  { "name": "Quiche", "note": "", "recipe": "", "difficulty": 2, "duration": 35, "tags": ["Plat","Féculent","Chaud","Complet"] },
+
+  { "name": "Raclette", "note": "", "recipe": "", "difficulty": 1, "duration": 40, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Ravioli", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Féculent","Chaud","Complet"] },
+
+  { "name": "Risotto", "note": "", "recipe": "", "difficulty": 3, "duration": 40, "tags": ["Plat","Féculent","Chaud","Complet"] },
+
+  { "name": "Salade", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Salade","Légumes","Froid"] },
+
+  { "name": "Tajine", "note": "", "recipe": "", "difficulty": 3, "duration": 60, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Toast", "note": "", "recipe": "", "difficulty": 1, "duration": 5, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Tomates farcies", "note": "", "recipe": "", "difficulty": 3, "duration": 50, "tags": ["Plat","Viande","Chaud","Complet"] },
+
+  { "name": "Wrap Maison", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Sandwich","Viande","Froid","Complet"] },
+  { "name": "Wrap surgelé", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Sandwich","Viande","Froid","Complet", "Industriel"] },
+  { "name": "Wrap", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Sandwich","Viande","Froid","Complet", "Commande"] },
+
+  
+
+  { "name": "Pommes de terre vapeur", "note": "", "recipe": "", "difficulty": 1, "duration": 25, "tags": ["Plat","Féculent","Chaud","Accompagnement"] },
+  { "name": "Pommes de terre sautées", "note": "", "recipe": "", "difficulty": 1, "duration": 30, "tags": ["Plat","Féculent","Chaud","Accompagnement"] },
+  { "name": "Frites", "note": "", "recipe": "", "difficulty": 1, "duration": 25, "tags": ["Plat","Féculent","Chaud","Accompagnement"] },
+
+  { "name": "Pâtes", "note": "", "recipe": "", "difficulty": 1, "duration": 12, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Riz", "note": "", "recipe": "", "difficulty": 1, "duration": 12, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Semoule", "note": "", "recipe": "", "difficulty": 1, "duration": 5, "tags": ["Plat","Féculent","Chaud"] },
+
+  { "name": "Œufs au plat", "note": "", "recipe": "", "difficulty": 1, "duration": 5, "tags": ["Plat","Viande","Chaud"] },
+  { "name": "Omelette", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Plat","Viande","Chaud"] },
+  { "name": "Œufs brouillés", "note": "", "recipe": "", "difficulty": 1, "duration": 8, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Haricots verts", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Légumes","Chaud","Accompagnement"] },
+  { "name": "Petits pois", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Plat","Légumes","Chaud","Accompagnement"] },
+  { "name": "Carottes vapeur", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Légumes","Chaud","Accompagnement"] },
+
+  { "name": "Poêlée de légumes", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Légumes","Chaud"] },
+
+  { "name": "Soupe de légumes", "note": "", "recipe": "", "difficulty": 1, "duration": 30, "tags": ["Plat","Légumes","Chaud"] },
+
+  { "name": "Lentilles", "note": "", "recipe": "", "difficulty": 1, "duration": 25, "tags": ["Plat","Légumineuse","Chaud"] },
+  { "name": "Pois chiches", "note": "", "recipe": "", "difficulty": 1, "duration": 20, "tags": ["Plat","Légumineuse","Chaud"] },
+
+
+  { "name": "Tiramisu", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Dessert","Froid"] },
+
+  { "name": "Fondant au chocolat", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Dessert","Chaud"] },
+
+  { "name": "Cheesecake", "note": "", "recipe": "", "difficulty": 3, "duration": 60, "tags": ["Dessert","Froid"] },
+
+  { "name": "Tarte au citron meringuée", "note": "", "recipe": "", "difficulty": 3, "duration": 50, "tags": ["Dessert","Chaud"] },
+
+  { "name": "Tarte Tatin", "note": "", "recipe": "", "difficulty": 3, "duration": 60, "tags": ["Dessert","Chaud"] },
+
+  { "name": "Tarte aux pommes", "note": "", "recipe": "", "difficulty": 2, "duration": 60, "tags": ["Dessert","Chaud"] },
+
+  { "name": "Moelleux cœur coulant caramel", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Dessert","Chaud"] },
+
+
+
+  { "name": "Cookies", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Brownie chocolat noix", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Muffins chocolat", "note": "", "recipe": "", "difficulty": 2, "duration": 30, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Madeleines", "note": "", "recipe": "", "difficulty": 2, "duration": 25, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Cakes marbré", "note": "", "recipe": "", "difficulty": 2, "duration": 45, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Crêpes", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Gaufres sucre", "note": "", "recipe": "", "difficulty": 2, "duration": 20, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Pain perdu", "note": "", "recipe": "", "difficulty": 2, "duration": 20, "tags": ["Dessert","Goûter"] },
+
+  { "name": "Beignets", "note": "", "recipe": "", "difficulty": 3, "duration": 35, "tags": ["Dessert","Goûter"] },
+
+
+
+  { "name": "Steak haché", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Entrecôte", "note": "", "recipe": "", "difficulty": 2, "duration": 15, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Escalope de poulet", "note": "", "recipe": "", "difficulty": 1, "duration": 10, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Blanc de poulet", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Cuisse de poulet", "note": "", "recipe": "", "difficulty": 2, "duration": 45, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Saucisses", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Merguez", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Chipolatas", "note": "", "recipe": "", "difficulty": 1, "duration": 15, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Côte de porc", "note": "", "recipe": "", "difficulty": 2, "duration": 20, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Émincé de bœuf", "note": "", "recipe": "", "difficulty": 2, "duration": 10, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Magret de canard", "note": "", "recipe": "", "difficulty": 3, "duration": 25, "tags": ["Plat","Viande","Chaud"] },
+
+  { "name": "Bacon", "note": "", "recipe": "", "difficulty": 1, "duration": 5, "tags": ["Plat","Viande","Chaud"] }
+]

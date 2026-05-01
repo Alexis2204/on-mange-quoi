@@ -1,10 +1,13 @@
 <script>
 import Chip from './Chip.vue';
 
-
 export default {
     props: {
-        tags: {
+        includeTags: {
+            type: Array,
+            default: () => []
+        },
+        excludeTags: {
             type: Array,
             default: () => []
         },
@@ -13,39 +16,61 @@ export default {
             default: () => []
         }
     },
-    emits: ['update:tags'],
-    components: {
-        Chip
-    },
+    emits: ['update'],
+    components: { Chip },
+
     methods: {
-        toggleTag(tag) {
-            let newTags = [...this.tags];
-            if (this.tags.includes(tag)) {
-                newTags = newTags.filter(t => t !== tag);
-            } else {
-                newTags.push(tag);
-            }
-            this.$emit('update:tags', newTags);
+        getState(tag) {
+            if (this.includeTags.includes(tag)) return "include";
+            if (this.excludeTags.includes(tag)) return "exclude";
+            return "neutral";
         },
-        isSelected(tag) {
-          return this.tags.includes(tag);
+
+        toggle(tag) {
+            const isInclude = this.includeTags.includes(tag);
+            const isExclude = this.excludeTags.includes(tag);
+
+            let newInclude = [...this.includeTags];
+            let newExclude = [...this.excludeTags];
+
+            if (!isInclude && !isExclude) {
+                // neutral → include
+                newInclude.push(tag);
+            } else if (isInclude) {
+                // include → exclude
+                newInclude = newInclude.filter(t => t !== tag);
+                newExclude.push(tag);
+            } else {
+                // exclude → neutral
+                newExclude = newExclude.filter(t => t !== tag);
+            }
+
+            this.$emit('update', {
+                includeTags: newInclude,
+                excludeTags: newExclude
+            });
         }
     }
 }
-
 </script>
 
 <template>
-    <div class="chips-edit">
-        <Chip v-for="tag in allTags" :name="tag" :key="tag" :selected="isSelected(tag)" @click="toggleTag(tag)"></Chip>
+    <div class="chips-filter">
+        <Chip
+            v-for="tag in allTags"
+            :key="tag"
+            :name="tag"
+            :state="getState(tag)"
+            @click="toggle(tag)"
+        />
     </div>
 </template>
 
 <style scoped>
-.chips-edit {
+.chips-filter {
     display: flex;
     gap: 8px;
-    font-size: small;
     flex-wrap: wrap;
+    font-size: small;
 }
 </style>

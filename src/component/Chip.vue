@@ -1,31 +1,19 @@
 <script>
-import IconDelete from '@/icon/IconDelete.vue';
-
-
-
 export default {
     props: {
         name: String,
-        delete: {
-            type: Boolean,
-            default: false
-        },
-        selected: {
-            type: Boolean,
-            default: false
+        state: {
+            type: String,
+            default: "neutral"
         }
     },
-    emits: ['delete'],
-    components: {
-        IconDelete
-    }
+    emits: ["click"]
 }
 </script>
 
 <template>
-    <div class="chip" :class="{ selected: selected }">
+    <div class="chip" :class="state" @click="$emit('click')">
         {{ name }}
-        <IconDelete v-if="delete" @click="$emit('delete')"></IconDelete>
     </div>
 </template>
 
@@ -41,9 +29,15 @@ export default {
     gap: 4px;
 }
 
-.selected {
+.chip.include {
     background-color: var(--text-color);
     color: white;
+}
+
+.chip.exclude {
+    color: white;
+    background-color: #c90530; /* rouge rosé / moderne */
+    border-color: #c90530;
 }
 
 

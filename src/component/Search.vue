@@ -34,6 +34,13 @@ export default {
           [field]: value
         });
       },
+      updateTags({ includeTags, excludeTags }) {
+        this.$emit('update:modelValue', {
+          ...this.modelValue,
+          includeTags,
+          excludeTags
+        });
+      },
       toggleAdvanced() {
         this.showAdvanced = !this.showAdvanced;
       }
@@ -75,7 +82,12 @@ export default {
           <div class="info">
               Tags
           </div>
-          <ChipsFilter :tags="modelValue.tags" :all-tags="tags" @update:tags="update('tags', $event)"></ChipsFilter>
+          <ChipsFilter
+            :includeTags="modelValue.includeTags"
+            :excludeTags="modelValue.excludeTags"
+            :allTags="tags"
+            @update="updateTags"
+          />
         </div>
     </div>
 </template>

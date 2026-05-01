@@ -21,7 +21,8 @@ export default {
             meals: [],
             search: {
               query: "",
-              tags: [],
+              includeTags: [],
+              excludeTags: [],
               difficulties: [],
               durations: [],
               sortBy: "name",
@@ -104,8 +105,8 @@ export default {
       },
       tags() {
         return [...new Set(
-              this.meals.flatMap(meal => meal.tags ?? [])
-            )];
+          this.meals.flatMap(meal => meal.tags ?? [])
+        )].sort((a, b) => a.localeCompare(b));
       }
     },
     async created() {
@@ -134,7 +135,7 @@ export default {
 
         <div class="footer"></div>
 
-        <CardView v-if="selectedMeal" :meal="selectedMeal" @close="(refresh) => closeCard(refresh)" />
+        <CardView v-if="selectedMeal" :all-tags="tags" :meal="selectedMeal" @close="(refresh) => closeCard(refresh)" />
 
         <button ref="explorerBtn" class="explorer" @click="openMenu">
             <IconExplorer :height="29"></IconExplorer>
