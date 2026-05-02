@@ -18,6 +18,7 @@ import {
   getGlobaleMealFromNewMeal, 
   getUserMealFromNewMeal 
 } from "./utils";
+import { createMeal } from "./llm"
 
 export const syncUserWithFirestore = async (user) => {
   try {
@@ -81,11 +82,31 @@ export const getUserMeals = async (userId) => {
   }
 };
 
+export const getKey = async () => {
+  const ref = doc(db, "key", "groq"); 
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    throw new Error("Clé API Groq introuvable dans Firebase");
+  }
+
+  const data = snap.data();
+
+  if (!data.key) {
+    throw new Error("Champ 'key' manquant dans le document api/key");
+  }
+
+  return data.key;
+};
+
 export const addMealForUser = async (userId, meal) => {
   try {
     if (!userId) {
       console.error("pas de userId");
     }
+
+    const key = await getKey();
+    meal = await createMeal(meal.name, key);
 
     let timestamp = serverTimestamp();
     // 1️⃣ Ajouter dans la collection globale
