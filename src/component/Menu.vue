@@ -25,7 +25,7 @@ export default {
             default: () => []
         }
     },
-    emits: ['close', 'select', 'roll'],
+    emits: ['close', 'select', 'roll', 'add'],
     components: {
         IconExplorer,
         IconClose,
@@ -54,9 +54,9 @@ export default {
       },
       async createNewMeal(newMeal) {
         try {
-            await addMealForUser(auth.currentUser?.uid, newMeal);
+            const mealId = await addMealForUser(auth.currentUser?.uid, newMeal);
             this.showMenu = true;
-            this.$emit('close');
+            this.$emit('add', mealId);
         } catch(e) {
             console.error(e);
         }

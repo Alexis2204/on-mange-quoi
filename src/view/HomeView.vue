@@ -93,6 +93,12 @@ export default {
 
         selectMeal() {
             this.openCard(pickRandomMealWeighted(this.meals));
+        },
+
+        async newMeal(mealId) {
+            await this.closeMenu(true);
+            const meal = this.meals.find(m => m.id === mealId);
+            this.openCard(meal);
         }
     },
     computed: {
@@ -142,7 +148,7 @@ export default {
             <span>Explorer</span>
         </button>
 
-        <Menu ref="menu" :meals="meals" @close="closeMenu" @roll="selectMeal">
+        <Menu ref="menu" :meals="meals" @close="closeMenu" @roll="selectMeal" @add="newMeal">
         </Menu>
     </div>
 </template>
